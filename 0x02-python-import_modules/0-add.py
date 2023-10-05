@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# Author - Med.AMEZZANE
 
 if __name__ == "__main__":
 	from add_0 import add
