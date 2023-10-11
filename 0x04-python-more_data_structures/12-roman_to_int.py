@@ -12,7 +12,11 @@ def roman_to_int(roman_string):
 
     for index, character in enumerate(roman_string):
         current_value = roman_numerals.get(character, 0)
-        next_value = roman_numerals.get(roman_string[index + 1], 0) if index + 1 < len(roman_string) else 0
+        next_value = (
+            roman_numerals.get(roman_string[index + 1], 0)
+            if index + 1 < len(roman_string)
+            else 0
+        )
 
         if current_value >= next_value:
             result += current_value
