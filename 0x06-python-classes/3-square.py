@@ -13,7 +13,7 @@ class Square:
         """Initializes the square.
 
         Args:
-            size (int): The size of a side of the square.
+            size (int): Size of a side of the square.
         Raises:
             TypeError: If size is not an integer.
             ValueError: If size is less than 0.
@@ -25,3 +25,11 @@ class Square:
                 raise ValueError("size must be >= 0")
             else:
                 self.__size = size
+
+    def area(self):
+        """Calculates the square's area.
+
+        Returns:
+            The area of the square.
+        """
+        return (self.__size) ** 2
