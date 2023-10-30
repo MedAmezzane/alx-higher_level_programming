@@ -25,7 +25,7 @@ class Rectangle:
             TypeError: If width or height is not an integer.
             ValueError: If width or height is less than 0.
         """
-       
+
         self.height = height
         self.width = width
 
