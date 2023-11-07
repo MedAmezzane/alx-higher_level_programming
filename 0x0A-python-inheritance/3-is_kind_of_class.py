@@ -4,7 +4,7 @@ Defines a function to check if an object is an instance of a specific class.
 """
 
 
-def is_same_class(obj, a_class):
+def is_kind_of_class(obj, a_class):
     """
     Check if the type of an object matches a specific class.
 
@@ -15,6 +15,4 @@ def is_same_class(obj, a_class):
     Returns:
         True if obj's type is exactly the same as a_class, otherwise False.
     """
-    if isinstance(obj, a_class):
-        return True
-    return False
+    return isinstance(obj, a_class)
