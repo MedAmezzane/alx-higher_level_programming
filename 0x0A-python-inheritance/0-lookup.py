@@ -3,6 +3,7 @@
 Defines a function for object attribute lookup.
 """
 
+
 def lookup(obj):
     """
     Return a list of the available attributes of an object.
