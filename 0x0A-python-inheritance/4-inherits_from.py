@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Defines a function for checking if an object is an inherited instance of a class.
+Define a function for checking if an object is an inherited instance of a class
 """
 
 
@@ -13,6 +13,8 @@ def inherits_from(obj, a_class):
         a_class (type): The class to compare with the type of obj.
 
     Returns:
-        True if obj's type is an inherited instance of a_class, otherwise False.
+        True if obj's type is an inherited instance of a_class, otherwise False
     """
-    return issubclass(type(obj), a_class) and type(obj) != a_class
+    if type(obj) is a_class:
+        return False
+    return isinstance(obj, a_class)
