@@ -4,7 +4,7 @@ Defines a function to generate Pascal's Triangle of a specified size.
 """
 
 
-def generate_pascals_triangle(n):
+def pascal_triangle(n):
     """Generate Pascal's Triangle of size n.
 
     Args:
