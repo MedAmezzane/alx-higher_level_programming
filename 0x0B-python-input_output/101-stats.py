@@ -15,7 +15,7 @@ def print_stats(total_file_size, status_code_counts):
         total_file_size (int): The accumulated total file size.
         status_code_counts (dict): The accumulated count of status codes.
     """
-    print("Total file size: {}".format(total_file_size))
+    print("File size: {}".format(total_file_size))
     for code in sorted(status_code_counts):
         print("{}: {}".format(code, status_code_counts[code]))
 
