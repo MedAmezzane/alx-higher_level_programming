@@ -5,7 +5,7 @@ in a text file.
 """
 
 
-def insert_text_after(filename="", search_string="", new_text=""):
+def append_after(filename="", search_string="", new_text=""):
     """Insert text after each line containing a specified string in a text file
 
     Args:
