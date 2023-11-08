@@ -3,8 +3,8 @@
 Defines a class Square that is a subclass of Rectangle.
 """
 
-
 Rectangle = __import__('9-rectangle').Rectangle
+
 
 class Square(Rectangle):
     """

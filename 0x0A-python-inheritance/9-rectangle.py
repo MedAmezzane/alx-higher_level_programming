@@ -3,8 +3,8 @@
 Defines a class Rectangle that inherits from BaseGeometry.
 """
 
-
 BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
 
 class Rectangle(BaseGeometry):
     """
@@ -33,5 +33,10 @@ class Rectangle(BaseGeometry):
 
     def __str__(self):
         """Return a string representation of the Rectangle."""
-        string = "[{}] {}/{}".format(self.__class__.__name__, self.__width, self.__height)
+        string = "[{}] {}/{}".format(
+            self.__class__.__name__,
+            self.__width,
+            self.__height
+            )
+
         return string
