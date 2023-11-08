@@ -1,75 +1,59 @@
 #!/usr/bin/python3
+"""Reads from standard input and computes metrics.
+
+After processing every ten lines or encountering a keyboard interruption
+(CTRL + C), this script prints the following statistics:
+- Total file size up to that point.
+- Count of read status codes up to that point.
 """
-Reads from standard input and computes metrics.
-
-After every ten lines or the input of a keyboard interruption (CTRL + C),
-prints the following statistics:
-    - Total file size up to that point.
-    - Count of read status codes up to that point.
-"""
 
 
-import sys
+def print_stats(total_file_size, status_code_counts):
+    """Print accumulated metrics.
 
-
-class StatusCodeTracker:
+    Args:
+        total_file_size (int): The accumulated total file size.
+        status_code_counts (dict): The accumulated count of status codes.
     """
-    Class for tracking and printing status codes.
-    """
-    def __init__(self):
-        """
-        Initialize a StatusCodeTracker instance.
-        """
-        self.status_code_count = {
-            '200': 0,
-            '301': 0,
-            '400': 0,
-            '401': 0,
-            '403': 0,
-            '404': 0,
-            '405': 0,
-            '500': 0
-        }
-        self.total_file_size = 0
-
-    def track_status_code(self, status):
-        """
-        Update status code counts.
-
-        Args:
-            status (str): The HTTP status code.
-        """
-        if status in self.status_code_count:
-            self.status_code_count[status] += 1
-
-    def print_statistics(self):
-        """
-        Print status code statistics.
-        """
-        print("Total file size: {:d}".format(self.total_file_size))
-        for code, count in sorted(self.status_code_count.items()):
-            if count > 0:
-                print("{}: {:d}".format(code, count))
+    print("Total file size: {}".format(total_file_size))
+    for code in sorted(status_code_counts):
+        print("{}: {}".format(code, status_code_counts[code]))
 
 
-if __name__ == "__main__":
-    code_tracker = StatusCodeTracker()
+if __name__ == "__main":
+    import sys
+
+    total_file_size = 0
+    status_code_counts = {}
+    valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
     line_count = 0
 
     try:
         for line in sys.stdin:
-            if line_count % 10 == 0 and line_count != 0:
-                code_tracker.print_statistics()
+            if line_count == 10:
+                print_stats(total_file_size, status_code_counts)
+                line_count = 1
+            else:
+                line_count += 1
+
+            line_parts = line.split()
 
             try:
-                parts = [x for x in line.split() if x.strip()]
-                status_code = parts[-2]
-                code_tracker.track_status_code(status_code)
-                code_tracker.total_file_size += int(parts[-1].strip("\n"))
+                total_file_size += int(line_parts[-1])
             except (IndexError, ValueError):
                 pass
-            line_count += 1
+
+            try:
+                if line_parts[-2] in valid_codes:
+                    if line_parts[-2] not in status_code_counts:
+                        status_code_counts[line_parts[-2]] = 1
+                    else:
+                        status_code_counts[line_parts[-2]] += 1
+            except IndexError:
+                pass
+
+        print_stats(total_file_size, status_code_counts)
+
     except KeyboardInterrupt:
-        code_tracker.print_statistics()
+        print_stats(total_file_size, status_code_counts)
         raise
-    code_tracker.print_statistics()
