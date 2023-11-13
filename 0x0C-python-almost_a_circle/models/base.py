@@ -2,6 +2,8 @@
 
 """Defines the base model class."""
 import json
+import csv
+import turtle
 
 
 class Base:
@@ -102,3 +104,94 @@ class Base:
                 return [cls.create(**d) for d in list_of_dicts]
         except IOError:
             return []
+
+    @classmethod
+    def save_to_file_csv(cls, list_of_objects):
+        """Write the CSV serialization of a list of objects to a file.
+
+        Args:
+            list_of_objects (list): A list of inherited Base instances.
+        """
+        filename = cls.__name__ + ".csv"
+        with open(filename, "w", newline="") as csvfile:
+            if list_of_objects is None or not list_of_objects:
+                csvfile.write("[]")
+            else:
+                fieldnames = cls.get_fieldnames()
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                for obj in list_of_objects:
+                    writer.writerow(obj.to_dictionary())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Return a list of class instances instantiated from a CSV file.
+
+        Reads from `<cls.__name__>.csv`.
+
+        Returns:
+            If the file does not exist - an empty list.
+            Otherwise - a list of instantiated class instances.
+        """
+        filename = cls.__name__ + ".csv"
+        try:
+            with open(filename, "r", newline="") as csvfile:
+                fieldnames = cls.get_fieldnames()
+                list_of_dicts = csv.DictReader(csvfile, fieldnames=fieldnames)
+                list_of_dicts = [dict([k, int(v)] for k, v in d.items())
+                                for d in list_of_dicts]
+                return [cls.create(**d) for d in list_of_dicts]
+        except IOError:
+            return []
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        """Draw Rectangles and Squares using the turtle module.
+
+        Args:
+            list_rectangles (list): A list of Rectangle objects to draw.
+            list_squares (list): A list of Square objects to draw.
+        """
+        turt = turtle.Turtle()
+        turt.screen.bgcolor("#2cb77b")
+        turt.pensize(3)
+        turt.shape("turtle")
+
+        turt.color("#ffffff")
+        for rectangle in list_rectangles:
+            turt.showturtle()
+            turt.up()
+            turt.goto(rectangle.x, rectangle.y)
+            turt.down()
+            for _ in range(2):
+                turt.forward(rectangle.width)
+                turt.left(90)
+                turt.forward(rectangle.height)
+                turt.left(90)
+            turt.hideturtle()
+
+        turt.color("#b5e3d8")
+        for square in list_squares:
+            turt.showturtle()
+            turt.up()
+            turt.goto(square.x, square.y)
+            turt.down()
+            for _ in range(2):
+                turt.forward(square.width)
+                turt.left(90)
+                turt.forward(square.height)
+                turt.left(90)
+            turt.hideturtle()
+
+        turtle.exitonclick()
+
+    @staticmethod
+    def get_fieldnames():
+        """Get the fieldnames for CSV files.
+
+        Returns:
+            List: The fieldnames based on the class name.
+        """
+        if cls.__name__ == "Rectangle":
+            return ["id", "width", "height", "x", "y"]
+        else:
+            return ["id", "size", "x", "y"]
