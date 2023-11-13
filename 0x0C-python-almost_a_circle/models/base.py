@@ -138,7 +138,8 @@ class Base:
                 fieldnames = cls.get_fieldnames()
                 list_of_dicts = csv.DictReader(csvfile, fieldnames=fieldnames)
                 list_of_dicts = [dict([k, int(v)] for k, v in d.items())
-                                for d in list_of_dicts]
+                                 for d in list_of_dicts
+                                 ]
                 return [cls.create(**d) for d in list_of_dicts]
         except IOError:
             return []
