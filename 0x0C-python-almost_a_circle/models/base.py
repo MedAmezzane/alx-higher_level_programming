@@ -184,15 +184,3 @@ class Base:
             turt.hideturtle()
 
         turtle.exitonclick()
-
-    @staticmethod
-    def get_fieldnames():
-        """Get the fieldnames for CSV files.
-
-        Returns:
-            List: The fieldnames based on the class name.
-        """
-        if cls.__name__ == "Rectangle":
-            return ["id", "width", "height", "x", "y"]
-        else:
-            return ["id", "size", "x", "y"]
